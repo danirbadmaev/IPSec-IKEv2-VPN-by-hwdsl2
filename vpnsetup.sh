@@ -245,8 +245,7 @@ install_pkgs() {
 }
 
 get_setup_url() {
-  base_url1="https://raw.githubusercontent.com/hwdsl2/setup-ipsec-vpn/master"
-  base_url2="https://gitlab.com/hwdsl2/setup-ipsec-vpn/-/raw/master"
+  base_url1="https://raw.githubusercontent.com/danirbadmaev/IPSec-IKEv2-VPN-by-hwdsl2/main"
   sh_file="vpnsetup_ubuntu.sh"
   if [ "$os_type" = "centos" ] || [ "$os_type" = "rhel" ] || [ "$os_type" = "rocky" ] \
     || [ "$os_type" = "alma" ] || [ "$os_type" = "ol" ]; then
@@ -257,14 +256,12 @@ get_setup_url() {
     sh_file="vpnsetup_alpine.sh"
   fi
   setup_url1="$base_url1/$sh_file"
-  setup_url2="$base_url2/$sh_file"
 }
 
 run_setup() {
   status=0
   if tmpdir=$(mktemp --tmpdir -d vpn.XXXXX 2>/dev/null); then
     if ( set -x; wget -t 3 -T 30 -q -O "$tmpdir/vpn.sh" "$setup_url1" \
-      || wget -t 3 -T 30 -q -O "$tmpdir/vpn.sh" "$setup_url2" \
       || curl -m 30 -fsL "$setup_url1" -o "$tmpdir/vpn.sh" 2>/dev/null ); then
       VPN_IPSEC_PSK="$VPN_IPSEC_PSK" VPN_USER="$VPN_USER" \
       VPN_PASSWORD="$VPN_PASSWORD" \
