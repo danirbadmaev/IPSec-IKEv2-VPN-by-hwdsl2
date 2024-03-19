@@ -323,8 +323,7 @@ link_scripts() {
 
 get_helper_scripts() {
   bigecho "Downloading helper scripts..."
-  base1="https://raw.githubusercontent.com/hwdsl2/setup-ipsec-vpn/master/extras"
-  base2="https://gitlab.com/hwdsl2/setup-ipsec-vpn/-/raw/master/extras"
+  base1="https://raw.githubusercontent.com/danirbadmaev/IPSec-IKEv2-VPN-by-hwdsl2/main/extras"
   sc1=ikev2setup.sh
   sc2=add_vpn_user.sh
   sc3=del_vpn_user.sh
@@ -333,13 +332,8 @@ get_helper_scripts() {
   if wget -t 3 -T 30 -q "$base1/$sc1" "$base1/$sc2" "$base1/$sc3"; then
     link_scripts
   else
+    echo "Warning: Could not download helper scripts." >&2
     /bin/rm -f "$sc1" "$sc2" "$sc3"
-    if wget -t 3 -T 30 -q "$base2/$sc1" "$base2/$sc2" "$base2/$sc3"; then
-      link_scripts
-    else
-      echo "Warning: Could not download helper scripts." >&2
-      /bin/rm -f "$sc1" "$sc2" "$sc3"
-    fi
   fi
 }
 
